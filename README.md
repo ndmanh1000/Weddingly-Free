@@ -118,7 +118,7 @@ You can customize the following via environment variables:
 </p>
 
 * Custom Guest Names: If you'd like to personalize guest names such as Dear Peter or to:John, set your url with "to:".
-  ex (`https://wedding-invitation-five-black.vercel.app/to:peter`)
+  ex (`https://weddingly-free.vercel.app/to:Edward%20Tauran`)
 
 ## License
 
