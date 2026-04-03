@@ -17,6 +17,8 @@ type WeddingScreenProps = {
 const WeddingScreen = ({ name }: WeddingScreenProps) => {
   const [fadeClass, setFadeClass] = useState("opacity-0");
   const [isOpen, setIsOpen] = useState(false);
+  const [isGiftModalOpen, setIsGiftModalOpen] = useState(false);
+  const [isBrideGiftModalOpen, setIsBrideGiftModalOpen] = useState(false);
   const audioRef = useRef(null);
 
   // Untuk fade-in pertama kali
@@ -98,11 +100,12 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
     >
       {/* Gambar sisi kiri Wide Untuk Komputer */}
       <div
-        className="md:flex justify-center hidden items-end pb-12 w-2/3 h-1/2 md:h-full"
+        className="md:flex justify-center hidden items-end w-2/3 h-1/2 md:h-full"
         style={{
-          backgroundImage: `url(/foto_1_samping.jpg)`, //refer to base 1st photo
-          backgroundSize: "cover",
+          backgroundImage: `url(/hmdm.jpg)`, //refer to base 1st photo
+          backgroundSize: "contain",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <div
@@ -193,7 +196,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
             </div>
             {/* Slide 2 */}
             <div
-              className={`text-white h-screen flex items-end pb-16 px-12 snap-start `}
+              className={`relative text-white h-screen flex items-end pb-16 px-12 snap-start `}
               style={{
                 backgroundImage: `url(/slide_2.jpg)`,
                 backgroundSize: "cover",
@@ -205,7 +208,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 ref={slide2Ref}
                 className={`fadeInMove ${isSlide2InView ? "active" : ""}  `}
               >
-                <p className="font-legan text-sm my-2">The Groom</p>
+                <p className="font-legan text-sm my-2">Đức Mạnh</p>
                 <h1 className="text-xl md:text-3xl text-white  font-ovo">
                   {config.groom}
                 </h1>
@@ -220,11 +223,63 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 >
                   <FaInstagram /> {config.groomInstagram}
                 </Link>
+
+                <button
+                  type="button"
+                  onClick={() => setIsGiftModalOpen(true)}
+                  className="cursor-pointer hover:bg-black text-sm rounded-full flex items-center gap-x-2 text-center font-legan mt-4 bg-[#808080] w-fit px-6 py-2 text-white"
+                >
+                  Gửi quà
+                </button>
               </div>
+
+              {/* Gift Modal (Slide 2 only) */}
+              {isGiftModalOpen && (
+                <div
+                  className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 p-6"
+                  onClick={() => setIsGiftModalOpen(false)}
+                >
+                  <div
+                    className="w-full max-w-sm rounded-2xl bg-white p-6 text-black shadow-xl"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h2 className="font-ovo text-lg">Gửi quà</h2>
+                        <p className="mt-1 font-legan text-sm text-black/70">
+                          Chú rể: Nguyễn Đức Mạnh
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-full px-3 py-1 text-sm hover:bg-black/5"
+                        onClick={() => setIsGiftModalOpen(false)}
+                        aria-label="Close"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    <div className="mt-5 flex justify-center">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(
+                          "Nguyễn Đức Mạnh"
+                        )}`}
+                        alt="QR gửi quà - Nguyễn Đức Mạnh"
+                        className="h-60 w-60 rounded-xl bg-white"
+                      />
+                    </div>
+
+                    <p className="mt-4 text-center font-legan text-xs text-black/60">
+                      Quét mã QR để gửi quà
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
             {/* Slide 3 */}
             <div
-              className="snap-start  text-white h-screen flex items-end pb-16 px-12 "
+              className="relative snap-start  text-white h-screen flex items-end pb-16 px-12 "
               style={{
                 backgroundImage: `url(/slide_3.jpg)`,
                 backgroundSize: "cover",
@@ -250,7 +305,59 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 >
                   <FaInstagram /> {config.brideInstagram}
                 </Link>
+
+                <button
+                  type="button"
+                  onClick={() => setIsBrideGiftModalOpen(true)}
+                  className="cursor-pointer hover:bg-black text-sm rounded-full flex items-center gap-x-2 text-center font-legan mt-4 bg-[#808080] w-fit px-6 py-2 text-white"
+                >
+                  Gửi quà
+                </button>
               </div>
+
+              {/* Gift Modal (Slide 3 only) */}
+              {isBrideGiftModalOpen && (
+                <div
+                  className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 p-6"
+                  onClick={() => setIsBrideGiftModalOpen(false)}
+                >
+                  <div
+                    className="w-full max-w-sm rounded-2xl bg-white p-6 text-black shadow-xl"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h2 className="font-ovo text-lg">Gửi quà</h2>
+                        <p className="mt-1 font-legan text-sm text-black/70">
+                          Cô dâu: Nguyễn Hà My
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-full px-3 py-1 text-sm hover:bg-black/5"
+                        onClick={() => setIsBrideGiftModalOpen(false)}
+                        aria-label="Close"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    <div className="mt-5 flex justify-center">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(
+                          "Nguyễn Hà My"
+                        )}`}
+                        alt="QR gửi quà - Nguyễn Hà My"
+                        className="h-60 w-60 rounded-xl bg-white"
+                      />
+                    </div>
+
+                    <p className="mt-4 text-center font-legan text-xs text-black/60">
+                      Quét mã QR để gửi quà
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
             {/* Slide 4 */}
             <div
@@ -267,7 +374,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                   className={`text-xl md:text-5xl  text-white font-ovo fadeInMove ${isSlide4InView ? " active" : ""
                     }`}
                 >
-                  A journey in love
+                 Hôn lễ của chúng tôi
                 </h1>
                 <h3
                   ref={slide4Ref}
