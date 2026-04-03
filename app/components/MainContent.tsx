@@ -681,7 +681,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
         )}
       </div>
       {/* Audio Element */}
-      <audio ref={audioRef} src="/music/wedding_song.mp3" preload="auto" />
+      <audio ref={audioRef} src="/music/wedding_song1.mp3" preload="auto" />
     </div>
   );
 };

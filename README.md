@@ -102,7 +102,7 @@ You can customize the following via environment variables:
 
 * Wedding Name, Dates, Countdown
 * Your OWN RSVP
-* Music in `public\music\wedding_song.mp3`
+* Music in `public\music\wedding_song1.mp3`
 * Picture in the public folder
 
   * `public/slide_1 to slide_9` for the slider images on each slide.
