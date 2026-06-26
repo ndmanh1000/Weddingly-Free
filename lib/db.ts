@@ -1,13 +1,17 @@
 import mongoose from "mongoose";
 
 const connectToDatabase = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI as string);
-    console.log("Connected to database");
-  } catch (error) {
-    console.log("Failed to connect to database");
-    console.error(error);
+  const uri = process.env.MONGODB_URI;
+
+  if (!uri) {
+    throw new Error("MONGODB_URI is not configured");
   }
+
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+
+  await mongoose.connect(uri);
 };
 
 export default connectToDatabase;

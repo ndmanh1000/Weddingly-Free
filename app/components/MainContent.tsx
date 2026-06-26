@@ -7,7 +7,10 @@ import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import CountdownTimer from "./Countdown";
 import Form from "./Form";
-import WishesList from "./WishesList";
+import WishesList, { FloatingHearts } from "./WishesList";
+import WeddingCalendarSection from "./WeddingCalendarSection";
+import FamilyVenueSection from "./FamilyVenueSection";
+import PhotoSwiperSection from "./PhotoSwiperSection";
 import { config } from "@/lib/config";
 
 type WeddingScreenProps = {
@@ -58,6 +61,18 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
     threshold: 0.5,
   });
 
+  const { ref: slideFamilyRef, inView: isSlideFamilyInView } = useInView({
+    threshold: 0.5,
+  });
+
+  const { ref: slideCalendarRef, inView: isSlideCalendarInView } = useInView({
+    threshold: 0.5,
+  });
+
+  const { ref: slideGalleryRef, inView: isSlideGalleryInView } = useInView({
+    threshold: 0.5,
+  });
+
   const { ref: slide4Ref, inView: isSlide4InView } = useInView({
     threshold: 0.5,
   });
@@ -96,11 +111,11 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
 
   return (
     <div
-      className={`h-screen w-screen flex flex-col md:flex-row ${fadeClass} transition-opacity duration-1000`}
+      className={`h-screen w-screen flex flex-col lg:flex-row ${fadeClass} transition-opacity duration-1000`}
     >
       {/* Gambar sisi kiri Wide Untuk Komputer */}
       <div
-        className="md:flex justify-center hidden items-end w-2/3 h-1/2 md:h-full"
+        className="lg:flex justify-center hidden items-end w-2/3 h-1/2 lg:h-full"
         style={{
           backgroundImage: `url(/hmdm.jpg)`, //refer to base 1st photo
           backgroundSize: "contain",
@@ -116,13 +131,13 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
       </div>
 
       {/* Konten teks sisi kanan bisa scroll untuk pc */}
-      <div className=" md:w-1/3 h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+      <div className="w-full lg:w-1/3 h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
         <div
           id="backgroundWedding"
           className=" snap-start  w-full h-screen flex items-center justify-center "
         >
           <div className="text-center p-5 flex flex-col h-full justify-between py-20">
-            <div className="gap-y-2 md:gap-y-4 flex flex-col">
+            <div className="gap-y-2 lg:gap-y-4 flex flex-col">
               <h5
                 className={`text-sm font-legan text-white uppercase tracking-wide fadeMain2 ${isMain2InView ? "active" : ""
                   } `}
@@ -131,7 +146,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 The Wedding Of
               </h5>
               <h1
-                className={`text-2xl md:text-3xl font-ovo t text-white uppercase fadeMain ${isMainInView ? "active" : ""
+                className={`text-2xl lg:text-3xl font-ovo t text-white uppercase fadeMain ${isMainInView ? "active" : ""
                   } `}
                 ref={mainRef}
               >
@@ -185,7 +200,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 ref={slide1Ref}
                 className={` ${isSlide1InView ? "active" : ""}  fadeInMove`}
               >
-                <h1 className="text-xl md:text-2xl font-ovo tracking-wide text-white uppercase">
+                <h1 className="text-xl lg:text-2xl font-ovo tracking-wide text-white uppercase">
                   {config.bibleVerse}
                 </h1>
                 <p className="text-sm mt-5 font-legan">
@@ -209,7 +224,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 className={`fadeInMove ${isSlide2InView ? "active" : ""}  `}
               >
                 <p className="font-legan text-sm my-2">Đức Mạnh</p>
-                <h1 className="text-xl md:text-3xl text-white  font-ovo">
+                <h1 className="text-xl lg:text-3xl text-white  font-ovo">
                   {config.groom}
                 </h1>
                 <h3 className="font-thesignature text-2xl">About {config.groomNickName},</h3>
@@ -291,7 +306,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 className={`fadeInMove ${isSlide3InView ? "active" : ""}  `}
               >
                 <p className="font-legan text-sm my-2">The Bride</p>
-                <h1 className="text-xl md:text-3xl text-white  font-ovo">
+                <h1 className="text-xl lg:text-3xl text-white  font-ovo">
                   {config.bride}
                 </h1>
                 <h3 className="font-thesignature text-2xl">About {config.brideNickName},</h3>
@@ -359,6 +374,27 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
                 </div>
               )}
             </div>
+            {/* Slide: Giới thiệu nhà trai - nhà gái + chỉ đường */}
+            <div
+              ref={slideFamilyRef}
+              className="snap-start h-screen w-full"
+            >
+              <FamilyVenueSection active={isSlideFamilyInView} />
+            </div>
+            {/* Slide: Lịch + đếm ngược */}
+            <div
+              ref={slideCalendarRef}
+              className="snap-start h-screen w-full"
+            >
+              <WeddingCalendarSection active={isSlideCalendarInView} />
+            </div>
+            {/* Slide: Swiper 10 ảnh */}
+            <div
+              ref={slideGalleryRef}
+              className="snap-start h-screen w-full"
+            >
+              <PhotoSwiperSection active={isSlideGalleryInView} />
+            </div>
             {/* Slide 4 */}
             <div
               className="snap-start  text-white h-screen pt-8 flex px-12 "
@@ -371,7 +407,7 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
               <div>
                 <h1
                   ref={slide4Ref}
-                  className={`text-xl md:text-5xl  text-white font-ovo fadeInMove ${isSlide4InView ? " active" : ""
+                  className={`text-xl lg:text-5xl  text-white font-ovo fadeInMove ${isSlide4InView ? " active" : ""
                     }`}
                 >
                  Hôn lễ của chúng tôi
@@ -625,20 +661,25 @@ const WeddingScreen = ({ name }: WeddingScreenProps) => {
 
             {/* SLIDE 10 */}
             <div
-              className="snap-start text-white h-screen flex flex-col justify-center pt-16 pb-16 px-8"
+              className="relative snap-start overflow-hidden text-white h-screen flex flex-col justify-between pt-16 pb-8 px-8"
               style={{
                 backgroundImage: `url(/slide_9.jpg)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             >
+              <FloatingHearts active={isSlide10InView} />
+
               <div
                 ref={slide10Ref}
-                className={`${isSlide10InView ? "active" : ""} fadeInMove`}
+                className={`${isSlide10InView ? "active" : ""} fadeInMove relative z-10 w-full`}
               >
                 <h1 className="text-3xl text-white font-ovo text-center uppercase">
                   Wishes
                 </h1>
+              </div>
+
+              <div className="relative z-10 w-full">
                 <WishesList />
               </div>
             </div>
